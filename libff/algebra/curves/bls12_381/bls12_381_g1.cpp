@@ -1,5 +1,5 @@
 #include <libff/algebra/curves/bls12_381/bls12_381_g1.hpp>
-
+#include "/home/shahzada/log_controls/libsnarks/LOG_CONTROLS.hpp"
 namespace libff
 {
 
@@ -115,12 +115,16 @@ bool bls12_381_G1::operator!=(const bls12_381_G1 &other) const
 
 bls12_381_G1 bls12_381_G1::operator+(const bls12_381_G1 &other) const
 {
+    __LOG::logG1ECADDIn(other);
+    __LOG::logG1ECADDIn(*this);
     // handle special cases having to do with O
     if (this->is_zero()) {
+        __LOG::logG1ECADDOut(other);
         return other;
     }
 
     if (other.is_zero()) {
+        __LOG::logG1ECADDOut(*this);
         return *this;
     }
 
@@ -172,7 +176,8 @@ bls12_381_G1 bls12_381_G1::operator+(const bls12_381_G1 &other) const
     bls12_381_Fq Y3 = r * (V - X3) - (S1_J + S1_J);
     // Z3 = ((Z1+Z2)^2-Z1Z1-Z2Z2) * H
     bls12_381_Fq Z3 = ((this->Z + other.Z).squared() - Z1Z1 - Z2Z2) * H;
-
+    auto res = bls12_381_G1(X3, Y3, Z3);
+    __LOG::logG1ECADDOut(res);
     return bls12_381_G1(X3, Y3, Z3);
 }
 

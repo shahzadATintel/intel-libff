@@ -1,7 +1,7 @@
 #include <libff/algebra/curves/bls12_381/bls12_381_g1.hpp>
 #include <libff/algebra/curves/bls12_381/bls12_381_g2.hpp>
 #include <libff/algebra/curves/bls12_381/bls12_381_init.hpp>
-
+//#define __PRINT_PRIME_Q_R__
 namespace libff
 {
 
@@ -35,6 +35,7 @@ void init_bls12_381_params()
 
     bls12_381_modulus_r = bigint_r("5243587517512619047944774050818596583769055"
                                    "2500527637822603658699938581184513");
+                                   
     assert(bls12_381_Fr::modulus_is_valid());
     if (sizeof(mp_limb_t) == 8) {
         bls12_381_Fr::Rsquared =
@@ -623,6 +624,14 @@ void init_bls12_381_params()
     bls12_381_final_exponent_z =
         bigint<bls12_381_q_limbs>("15132376222941642752");
     bls12_381_final_exponent_is_z_neg = true;
+    
+    
+    #ifdef __PRINT_PRIME_Q_R__
+    std::cout<<"Prime_R = "<<bls12_381_modulus_r << std::endl;
+    std::cout<<"Prime_Q = "<<bls12_381_modulus_q << std::endl;
+    exit(1);
+    #endif
+
 }
 
 } // namespace libff
