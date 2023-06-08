@@ -272,8 +272,11 @@ bls12_381_G1 bls12_381_G1::dbl() const
 #ifdef PROFILE_OP_COUNTS
     this->dbl_cnt++;
 #endif
+    __LOG::logG1DoubleIn(*this);
+    __LOG::logG1DoubleIn(*this);
     // handle point at infinity
     if (this->is_zero()) {
+        __LOG::logG1DoubleOut(*this);
         return (*this);
     }
 
@@ -306,7 +309,8 @@ bls12_381_G1 bls12_381_G1::dbl() const
     bls12_381_Fq Y1Z1 = (this->Y) * (this->Z);
     // Z3 = 2 * Y1 * Z1
     bls12_381_Fq Z3 = Y1Z1 + Y1Z1;
-
+    auto res = bls12_381_G1(X3, Y3, Z3);
+    __LOG::logG1DoubleOut(res);
     return bls12_381_G1(X3, Y3, Z3);
 }
 

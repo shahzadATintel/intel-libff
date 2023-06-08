@@ -13,7 +13,7 @@
 
 #ifndef MULTIEXP_TCC_
 #define MULTIEXP_TCC_
-
+#include "/home/shahzada/log_controls/libsnarks/LOG_CONTROLS.hpp"
 #include <algorithm>
 #include <cassert>
 #include <libff/algebra/curves/curve_serialization.hpp>
@@ -290,14 +290,25 @@ public:
         UNUSED(exponents_end);
         const size_t length = bases_end - bases;
         const size_t c = internal::pippenger_optimal_c(length);
+        int len = length;
+        
+        __LOG::logIntScalar(len);
+        __LOG::logScalarMSMNonMont(len);
 
         const mp_size_t exp_num_limbs =
             std::remove_reference<decltype(*exponents)>::type::num_limbs;
         std::vector<bigint<exp_num_limbs>> bi_exponents(length);
         size_t num_bits = 0;
-
+        for (int i = 0; i < (bases_end - bases); i++) {
+            __LOG::logG1MSM(bases[i]);
+        }
+        for (int i = 0; i < (exponents_end - exponents); i++) {
+            __LOG::logScalarMSM(exponents[i]);
+        }
+        //exit(1);
         for (size_t i = 0; i < length; i++) {
             bi_exponents[i] = exponents[i].as_bigint();
+            __LOG::logScalarMSMNonMont(bi_exponents[i]);
             num_bits = std::max(num_bits, bi_exponents[i].num_bits());
         }
 
@@ -375,7 +386,10 @@ public:
                 }
             }
         }
-
+        __LOG::logG1MSM(result);
+        #ifdef __EXIT_EARLY__
+            exit(1);
+        #endif
         return result;
     }
 };
