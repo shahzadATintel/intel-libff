@@ -10,7 +10,7 @@
 #include <libff/algebra/curves/bls12_381/bls12_381_init.hpp>
 #include <libff/algebra/curves/curve_utils.hpp>
 #include <vector>
-
+static long int _add_ec_point_count=0;
 namespace libff
 {
 

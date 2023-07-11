@@ -115,6 +115,9 @@ bool bls12_381_G1::operator!=(const bls12_381_G1 &other) const
 
 bls12_381_G1 bls12_381_G1::operator+(const bls12_381_G1 &other) const
 {
+    
+    //if(_add_ec_point_count==100) exit(0);
+    _add_ec_point_count++;
     __LOG::logG1ECADDIn(other);
     __LOG::logG1ECADDIn(*this);
     // handle special cases having to do with O
@@ -154,7 +157,9 @@ bls12_381_G1 bls12_381_G1::operator+(const bls12_381_G1 &other) const
 
     if (U1 == U2 && S1 == S2) {
         // dbl case; nothing of above can be reused
-        return this->dbl();
+        auto ret = this->dbl();
+        __LOG::logG1ECADDOut(ret);
+        return ret;
     }
 
     // rest of add case
