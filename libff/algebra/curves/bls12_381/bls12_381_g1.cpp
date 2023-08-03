@@ -120,6 +120,7 @@ bls12_381_G1 bls12_381_G1::operator+(const bls12_381_G1 &other) const
     _add_ec_point_count++;
     __LOG::logG1ECADDIn(other);
     __LOG::logG1ECADDIn(*this);
+    //exit(1);
     // handle special cases having to do with O
     if (this->is_zero()) {
         __LOG::logG1ECADDOut(other);
@@ -362,10 +363,18 @@ bls12_381_G1 bls12_381_G1::random_element()
 
 void bls12_381_G1::write_uncompressed(std::ostream &out) const
 {
+    
+    bls12_381_G1 copy(*this);
+    out << copy.X << OUTPUT_SEPARATOR;
+    out << copy.Y << OUTPUT_SEPARATOR;
+    out << copy.Z << OUTPUT_SEPARATOR;
+    #if 0
     bls12_381_G1 copy(*this);
     copy.to_affine_coordinates();
     out << (copy.is_zero() ? 1 : 0) << OUTPUT_SEPARATOR;
     out << copy.X << OUTPUT_SEPARATOR << copy.Y;
+    //bud_add
+    #endif
 }
 
 void bls12_381_G1::write_compressed(std::ostream &out) const
@@ -374,7 +383,9 @@ void bls12_381_G1::write_compressed(std::ostream &out) const
     copy.to_affine_coordinates();
     out << (copy.is_zero() ? 1 : 0) << OUTPUT_SEPARATOR;
     /* storing LSB of Y */
-    out << copy.X << OUTPUT_SEPARATOR << (copy.Y.as_bigint().data[0] & 1);
+    out <<copy.X << OUTPUT_SEPARATOR << (copy.Y.as_bigint().data[0] & 1);
+    //out<<"Done Writing G1 Point"<<std::flush;
+    //exit(1);
 }
 
 void bls12_381_G1::read_uncompressed(std::istream &in, bls12_381_G1 &g)
@@ -437,6 +448,7 @@ std::ostream &operator<<(std::ostream &out, const bls12_381_G1 &g)
 #ifdef NO_PT_COMPRESSION
     g.write_uncompressed(out);
 #else
+    //std::cout << "--SAB--DEBUG:" <<" Writing Compressed Point"<< std::endl;
     g.write_compressed(out);
 #endif
     return out;

@@ -96,6 +96,7 @@ public:
             out_s << '"' << bigint_to_hex(field_el.as_bigint(), true) << '"';
         } else {
             out_s << '"' << bigint_to_hex(field_el.mont_repr, true) << '"';
+            //std::cout<<"--SAB--DEBUG: " << "Decoding Numbers as HEX in Mont Form"<<std::endl;
         }
     };
     static void read(Field &field_el, std::istream &in_s)
