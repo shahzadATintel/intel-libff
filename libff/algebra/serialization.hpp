@@ -49,9 +49,9 @@ constexpr encoding_t DEFAULT_ENCODING = encoding_json;
 #endif
 
 #ifdef MONTGOMERY_OUTPUT
-constexpr form_t DEFAULT_FORM = form_plain;
-#else
 constexpr form_t DEFAULT_FORM = form_montgomery;
+#else
+constexpr form_t DEFAULT_FORM = form_plain;
 #endif
 
 #ifdef NO_PT_COMPRESSION

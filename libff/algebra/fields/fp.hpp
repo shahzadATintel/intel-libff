@@ -39,7 +39,7 @@ template<mp_size_t n, const bigint<n> &modulus> class Fp_model
 {
 public:
     typedef Fp_model<n, modulus> my_Fp;
-
+    typedef bigint<n> bigint_t;
     bigint<n> mont_repr;
 
     static void static_init();
