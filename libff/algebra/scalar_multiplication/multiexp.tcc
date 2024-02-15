@@ -13,7 +13,7 @@
 
 #ifndef MULTIEXP_TCC_
 #define MULTIEXP_TCC_
-#include "/home/shahzada/log_controls/libsnarks/LOG_CONTROLS.hpp"
+#include "../../../../../LOG_CONTROLS.hpp"
 #include <algorithm>
 #include <cassert>
 #include <libff/algebra/curves/curve_serialization.hpp>

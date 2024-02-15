@@ -1,5 +1,5 @@
 #include <libff/algebra/curves/bls12_381/bls12_381_g1.hpp>
-#include "/home/shahzada/log_controls/libsnarks/LOG_CONTROLS.hpp"
+#include "../../../../../../LOG_CONTROLS.hpp"
 namespace libff
 {
 
